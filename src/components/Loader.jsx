@@ -7,7 +7,7 @@ import { profile } from '../data'
 const DEEP = [[0, [1, 2, 7]], [0.3, [3, 6, 24]], [0.55, [6, 17, 90]], [0.78, [0, 47, 225]], [1, [44, 84, 255]]]
 const LIGHT = [[0, [28, 72, 255]], [0.3, [84, 128, 255]], [0.55, [146, 176, 255]], [0.78, [204, 218, 255]], [1, [246, 249, 255]]]
 const GROUND = [239, 239, 239]
-const DURATION = 2600
+const DURATION = 5200
 
 const smooth = (t) => t * t * (3 - 2 * t)
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v))
@@ -119,16 +119,28 @@ export default function Loader() {
   useEffect(() => {
     if (state !== 'exit') return
     document.documentElement.classList.remove('is-loading')
-    const id = setTimeout(() => setState('gone'), 1000)
+    const id = setTimeout(() => setState('gone'), 1400)
     return () => clearTimeout(id)
   }, [state])
 
   if (state === 'gone') return null
   return (
-    <div className={`loader ${state === 'exit' ? 'is-exit' : ''}`} aria-hidden="true">
+    <div className={`loader ${state === 'exit' ? 'is-exit' : ''} ${pct >= 80 ? 'is-light' : ''}`} aria-hidden="true">
       <canvas ref={canvas} />
       <div className="loader__mark">
-        <span className="loader__name">{profile.handle}<b>/</b></span>
+        <span className="loader__name" aria-label={profile.fullName}>
+          {profile.fullName.split(' ').map((word, w, words) => {
+            const offset = words.slice(0, w).join('').length
+            return (
+              <span className="loader__word" key={w}>
+                {[...word].map((ch, i) => (
+                  <span className="loader__ch" key={i} style={{ '--i': offset + i }}>{ch}</span>
+                ))}
+              </span>
+            )
+          })}
+          <b className="loader__slash" style={{ '--i': profile.fullName.replace(/ /g, '').length }}>/</b>
+        </span>
         <span className="loader__pct">{String(pct).padStart(3, '0')}%</span>
       </div>
     </div>
