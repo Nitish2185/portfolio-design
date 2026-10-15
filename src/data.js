@@ -87,39 +87,78 @@ export const education = [
   },
 ]
 
-// Project `art` picks one of the animated card illustrations: terminal | share | comment | review
+// Project `art` picks one of the animated card illustrations: terminal | share | comment | review | chart
+// github / live can be null — the button is hidden then.
 export const projects = [
   {
-    title: 'Lorem Ipsum App',
-    blurb: 'Ship straight from idea to production. ' + LOREM,
-    tech: ['React', 'Node', 'Lorem'],
-    github: 'https://github.com/Nitish2185',
-    live: '#',
+    title: 'AI Personal Finance Advisor',
+    blurb:
+      'AI advisor that extracts financial data from natural language and gives savings and investment recommendations through a modular multi-agent workflow.',
+    highlights: [
+      '5 specialised agents: financial calculation, market analysis, savings, investment and consolidated reporting',
+      'Planner Agent orchestrates the workflow dynamically for personalised analysis',
+      'Live market data via yFinance',
+    ],
+    tech: ['Python', 'LangChain', 'Gemini Flash API', 'yFinance'],
+    github: null,
+    live: null,
+    art: 'review',
+  },
+  {
+    title: 'Webhook Manager',
+    blurb:
+      'Centralised platform to register webhooks, ingest events through token-based endpoints, monitor deliveries and replay failed events.',
+    highlights: [
+      '9 RESTful API endpoints with JWT authentication',
+      'Mongoose models for users, webhook configs and event payloads',
+      'React dashboard for inspecting, monitoring and replaying events',
+    ],
+    tech: ['Node.js', 'Express.js', 'MongoDB', 'React', 'JWT'],
+    github: 'https://github.com/Priyanshu2068/Webhook-Manager',
+    live: null,
     art: 'terminal',
   },
   {
-    title: 'Dolor Dashboard',
-    blurb: 'Effortless analytics. ' + LOREM,
-    tech: ['Ipsum', 'Dolor'],
-    github: 'https://github.com/Nitish2185',
-    live: '#',
-    art: 'share',
-  },
-  {
-    title: 'Sit Amet Chat',
-    blurb: 'Inline, real-time conversations. ' + LOREM,
-    tech: ['Sit', 'Amet', 'Elit'],
-    github: 'https://github.com/Nitish2185',
-    live: '#',
+    title: 'Prepare.ai',
+    blurb:
+      'Full-stack interview-prep app: subject and topic-wise MCQ practice, Gemini-generated quizzes and feedback, and progress analytics.',
+    highlights: [
+      'JWT auth, saved attempts and a dashboard of score trends, strong and weak topics',
+      'Gemini-powered quiz generation with a static fallback question bank',
+      'Admin panel for users, subjects and questions',
+    ],
+    tech: ['Next.js', 'React', 'Express', 'MongoDB', 'Gemini', 'Tailwind CSS', 'Recharts'],
+    github: 'https://github.com/Priyanshu2068/Prepare-Ai',
+    live: 'https://prepare-ai-gt2d.vercel.app',
     art: 'comment',
   },
   {
-    title: 'Consectetur Bot',
-    blurb: 'A built-in reviewer that never sleeps. ' + LOREM,
-    tech: ['Consectetur', 'AI'],
-    github: 'https://github.com/Nitish2185',
-    live: '#',
-    art: 'review',
+    title: 'Voyager',
+    blurb:
+      'MERN travel platform for booking hotels, tours, restaurants, vehicles, flights and trains — with real-time chat and maps.',
+    highlights: [
+      'Reservation flows across hotels, tours, restaurants, vehicles, flights and trains',
+      'Real-time chat with Socket.io and email notifications with Nodemailer',
+      'Leaflet maps, Material UI dashboards and PDF reports',
+    ],
+    tech: ['MongoDB', 'Express', 'React', 'Node.js', 'Socket.io', 'Material UI', 'Leaflet'],
+    github: 'https://github.com/Priyanshu2068/Voyager',
+    live: 'https://voyager-five-ruby.vercel.app',
+    art: 'share',
+  },
+  {
+    title: 'FitPulse',
+    blurb:
+      'Fitness tracker for workouts, water intake, weight and goals, with an analytics dashboard, light/dark themes and PDF export.',
+    highlights: [
+      'Redux Toolkit store for auth, fitness data and UI state',
+      'Recharts analytics with goal progress and trends',
+      'Forms with React Hook Form and report export with jsPDF',
+    ],
+    tech: ['React', 'Redux Toolkit', 'Recharts', 'Tailwind CSS', 'Vite'],
+    github: 'https://github.com/Priyanshu2068/FitPulse_Fitness_Tracker',
+    live: 'https://fit-pulse-fitness-tracker.vercel.app',
+    art: 'chart',
   },
 ]
 

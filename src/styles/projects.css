@@ -314,3 +314,83 @@
     min-height: 380px;
   }
 }
+
+/* odd card count: last card spans the row */
+@media (min-width: 681px) {
+  .projects__grid > .pcard-wrap:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+.pcard__points {
+  margin: 10px 0 6px;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+  color: #c9c9d1;
+}
+
+/* fitness chart illustration */
+.art--chart {
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 26px 26px 30px;
+}
+.art__bars {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+.art__bars i {
+  flex: 1;
+  height: var(--h);
+  border-radius: 6px 6px 3px 3px;
+  background: #dbe3ff;
+  transform-origin: bottom;
+  animation: barGrow 3.2s var(--ease-soft) infinite;
+  animation-delay: calc(var(--i) * 0.08s);
+}
+.art__bars i:nth-child(4) {
+  background: var(--blue);
+}
+@keyframes barGrow {
+  0% { transform: scaleY(0.1); }
+  30%, 85% { transform: scaleY(1); }
+  100% { transform: scaleY(0.1); }
+}
+.art__ring {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  align-self: center;
+  display: grid;
+  place-items: center;
+}
+.art__ring svg {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+.art__ring circle {
+  fill: none;
+  stroke: var(--blue);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: ringFill 3.2s var(--ease-soft) infinite;
+}
+@keyframes ringFill {
+  0% { stroke-dashoffset: 1; }
+  35%, 85% { stroke-dashoffset: 0.25; }
+  100% { stroke-dashoffset: 1; }
+}
+.art__ring b {
+  font-family: var(--f-display);
+  font-size: 18px;
+}

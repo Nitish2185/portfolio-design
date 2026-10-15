@@ -10,16 +10,16 @@ function Art({ type }) {
   if (type === 'terminal')
     return (
       <div className="art art--term">
-        <p><span className="g">➜</span> npm run ship</p>
-        <p className="d1"><span className="g">[ok]</span> build 1.2s</p>
-        <p className="d2"><span className="g">[ok]</span> deployed ✓</p>
+        <p><span className="g">➜</span> POST /hooks/:token</p>
+        <p className="d1"><span className="g">[202]</span> payload stored</p>
+        <p className="d2"><span className="g">[ok]</span> replay delivered ✓</p>
         <span className="caret" />
       </div>
     )
   if (type === 'share')
     return (
       <div className="art art--share">
-        <div className="art__field"><span>lorem@ipsum.com</span><b>Share</b></div>
+        <div className="art__field"><span>Manali · 2 travellers</span><b>Book</b></div>
         <div className="art__people">
           {['#0039ff', '#5A7FFF', '#8a8a90', '#101013'].map((c, i) => (
             <span key={c} style={{ background: c, '--i': i }} />
@@ -30,15 +30,29 @@ function Art({ type }) {
   if (type === 'comment')
     return (
       <div className="art art--comment">
-        <p className="art__hl">Lorem ipsum <mark>dolor sit</mark> amet</p>
-        <div className="art__bubble"><Icon name="comment" size={12} /> Can we tweak this?</div>
+        <p className="art__hl">Which AWS service <mark>stores objects?</mark></p>
+        <div className="art__bubble"><Icon name="check" size={12} /> Correct — Amazon S3</div>
+      </div>
+    )
+  if (type === 'chart')
+    return (
+      <div className="art art--chart">
+        <div className="art__bars">
+          {[46, 72, 58, 88, 64, 80, 52].map((h, i) => (
+            <i key={i} style={{ '--h': `${h}%`, '--i': i }} />
+          ))}
+        </div>
+        <div className="art__ring">
+          <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" pathLength="1" /></svg>
+          <b>75%</b>
+        </div>
       </div>
     )
   return (
     <div className="art art--review">
       <Bot size={42} />
       <div className="art__checks">
-        {['Lint', 'Tests', 'Review'].map((c, i) => (
+        {['Savings', 'Market', 'Investment'].map((c, i) => (
           <p key={c} style={{ '--i': i }}><Icon name="check" size={12} /> {c}</p>
         ))}
       </div>
@@ -86,16 +100,26 @@ function ProjectCard({ p, i }) {
             <div className="pcard__back">
               <span className="pcard__no">0{i + 1}</span>
               <h3>{p.title}</h3>
-              <p className="pcard__label">Built with</p>
+              {p.highlights && (
+                <ul className="pcard__points">
+                  {p.highlights.map((h) => <li key={h}>{h}</li>)}
+                </ul>
+              )}
               <div className="pcard__tech">{p.tech.map((t) => <span key={t}>{t}</span>)}</div>
-              <div className="pcard__links">
-                <a href={p.github} target="_blank" rel="noreferrer" className="btn btn--blue btn--sm">
-                  <Icon name="github" size={16} /> Code
-                </a>
-                <a href={p.live} target="_blank" rel="noreferrer" className="btn btn--ghost btn--sm">
-                  Live <Icon name="arrowUpRight" size={16} />
-                </a>
-              </div>
+              {(p.github || p.live) && (
+                <div className="pcard__links">
+                  {p.github && (
+                    <a href={p.github} target="_blank" rel="noreferrer" className="btn btn--blue btn--sm">
+                      <Icon name="github" size={16} /> Code
+                    </a>
+                  )}
+                  {p.live && (
+                    <a href={p.live} target="_blank" rel="noreferrer" className="btn btn--ghost btn--sm">
+                      Live <Icon name="arrowUpRight" size={16} />
+                    </a>
+                  )}
+                </div>
+              )}
               <button className="pcard__flip" onClick={toggle}>
                 <Icon name="arrow" size={16} style={{ transform: 'scaleX(-1)' }} /> Back
               </button>
