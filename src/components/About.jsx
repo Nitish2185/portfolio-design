@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { profile, toolkit, projects, certifications, experience } from '../data'
+import { profile, skillGroups, projects, certifications, experience } from '../data'
 import Reveal from '../lib/Reveal'
 import { useInView, prefersReduced } from '../lib/motion'
 import Icon from './Icons'
@@ -69,11 +69,18 @@ export function About() {
           <Reveal as="p" className="eyebrow">About me</Reveal>
           <Reveal as="h2" className="h2" delay={0.08}>{profile.about.title}</Reveal>
           <Reveal as="p" className="lead" delay={0.16}>{profile.about.body}</Reveal>
-          <Reveal className="about__chips" delay={0.24}>
-            {toolkit.map((t) => (
-              <span className="chip" key={t}>{t}</span>
+          <div className="about__skills">
+            {skillGroups.map((g, i) => (
+              <Reveal className="about__group" key={g.name} delay={0.2 + i * 0.06}>
+                <span className="about__group-name">{g.name}</span>
+                <div className="about__chips">
+                  {g.items.map((t) => (
+                    <span className="chip" key={t}>{t}</span>
+                  ))}
+                </div>
+              </Reveal>
             ))}
-          </Reveal>
+          </div>
         </div>
         <ul className="about__points">
           {profile.about.points.map((p, i) => (

@@ -25,10 +25,38 @@
   gap: clamp(40px, 6vw, 90px);
   align-items: start;
 }
+.about__skills {
+  display: grid;
+  gap: 14px;
+}
+.about__group {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.about__group-name {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  padding-top: 7px;
+}
 .about__chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
+}
+.about__chips .chip {
+  font-size: 13px;
+  padding: 5px 12px;
+}
+@media (max-width: 480px) {
+  .about__group {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
 }
 .about__points {
   list-style: none;

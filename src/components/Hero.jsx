@@ -569,7 +569,7 @@ export default function Hero() {
                     </div>
                     <span className="about-card__badge"><span className="dot-live" /> open to work</span>
                   </div>
-                  <p className="about-card__label">Skills</p>
+                  <p className="about-card__label">Stack · tools per area</p>
                   <div className="skills-chart">
                     {skills.map((s) => (
                       <div className="skills-chart__col" key={s.name}>

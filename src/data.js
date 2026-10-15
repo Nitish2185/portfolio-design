@@ -37,17 +37,20 @@ export const profile = {
   ],
 }
 
-export const skills = [
-  { name: 'Lorem', level: 92 },
-  { name: 'Ipsum', level: 84 },
-  { name: 'Dolor', level: 78 },
-  { name: 'Sit', level: 70 },
-  { name: 'Amet', level: 88 },
-  { name: 'Elit', level: 64 },
-  { name: 'Sed', level: 74 },
+export const skillGroups = [
+  { name: 'Languages', items: ['C++', 'HTML/CSS', 'JavaScript (ES6+)', 'Python', 'Java', 'SQL'] },
+  { name: 'Frameworks', items: ['React.js', 'Node.js', 'Express.js', 'Tailwind CSS', 'Bootstrap'] },
+  { name: 'Databases', items: ['MongoDB', 'MySQL', 'PostgreSQL'] },
+  { name: 'Cloud', items: ['Docker', 'Amazon EC2', 'S3', 'CloudFront', 'Redshift', 'IAM', 'ELB', 'Route 53', 'RDS', 'DynamoDB'] },
+  { name: 'Tools', items: ['Git', 'GitHub', 'Postman'] },
+  { name: 'Concepts', items: ['REST APIs', 'DBMS', 'OOP', 'Data Structures'] },
 ]
 
-export const toolkit = ['Lorem', 'Ipsum', 'Dolor', 'Sit Amet', 'Consectetur', 'Adipiscing', 'Elit', 'Tempor', 'Magna', 'Aliqua']
+// Hero chart: bar height = number of tools in each group (relative to the largest)
+const maxGroup = Math.max(...skillGroups.map((g) => g.items.length))
+export const skills = skillGroups.map((g) => ({ name: g.name, level: Math.round((g.items.length / maxGroup) * 92) }))
+
+export const toolkit = skillGroups.flatMap((g) => g.items)
 
 export const experience = [
   {
