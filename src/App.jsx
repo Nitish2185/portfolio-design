@@ -8,6 +8,7 @@ import Projects from './components/Projects'
 import Certifications from './components/Certifications'
 import Connect from './components/Connect'
 import Contact from './components/Contact'
+import Faq from './components/Faq'
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Certifications />
         <Connect />
         <Contact />
+        <Faq />
       </main>
     </>
   )
