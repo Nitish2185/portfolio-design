@@ -3,17 +3,26 @@ import { emitOnce, onceFired } from '../lib/bus'
 import { prefersReduced } from '../lib/motion'
 import { profile } from '../data'
 
+// Colour ramps taken from the reference loader: deep space → brand blue, and blue → white
+const DEEP = [[0, [1, 2, 7]], [0.3, [3, 6, 24]], [0.55, [6, 17, 90]], [0.78, [0, 47, 225]], [1, [44, 84, 255]]]
+const LIGHT = [[0, [28, 72, 255]], [0.3, [84, 128, 255]], [0.55, [146, 176, 255]], [0.78, [204, 218, 255]], [1, [246, 249, 255]]]
+const GROUND = [239, 239, 239]
 const DURATION = 5200
 
-// corridor (world units) and how far it stretches
-const HW = 1.7 // half width
-const HH = 1.05 // half height
-const Z_NEAR = 0.35
-const Z_FAR = 46
-const RING_GAP = 1.1
-
-const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v))
 const smooth = (t) => t * t * (3 - 2 * t)
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v))
+const mix = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]
+const rgba = (c, a = 1) => `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${a.toFixed(3)})`
+function ramp(stops, t) {
+  for (let i = 1; i < stops.length; i++) {
+    if (t <= stops[i][0]) {
+      const [p0, c0] = stops[i - 1]
+      const [p1, c1] = stops[i]
+      return mix(c0, c1, smooth((t - p0) / (p1 - p0)))
+    }
+  }
+  return stops[stops.length - 1][1]
+}
 
 export default function Loader() {
   const canvas = useRef(null)
@@ -38,128 +47,59 @@ export default function Loader() {
     resize()
     addEventListener('resize', resize)
 
-    // floating dust inside the corridor
-    const dust = Array.from({ length: 110 }, () => ({
-      x: (Math.random() * 2 - 1) * HW * 0.9,
-      y: (Math.random() * 2 - 1) * HH * 0.9,
-      z: Z_NEAR + Math.random() * 24,
-      r: 0.6 + Math.random() * 1.4,
+    const stars = Array.from({ length: 220 }, () => ({
+      a: Math.random() * Math.PI * 2,
+      r: Math.random() * 0.9 + 0.02,
+      s: Math.random() * 0.6 + 0.4,
     }))
-    // soft bokeh blobs
-    const blobs = Array.from({ length: 7 }, (_, i) => ({
-      x: Math.random(), y: Math.random(), r: 0.18 + Math.random() * 0.22, s: 0.4 + Math.random() * 0.6, p: i * 1.7,
-    }))
-
+    const RINGS = 14
     const start = performance.now()
-    let camZ = 0, last = start
 
     const frame = (now) => {
       const t = clamp((now - start) / DURATION)
-      const dt = Math.min(0.05, (now - last) / 1000)
-      last = now
-      const speed = 0.9 + 2.4 * t * t // ease into a faster glide
-      camZ += dt * speed
-
-      const f = h * 0.62 // focal length
-      const cx = w * 0.5, cy = h * 0.5
-      const bendX = (w * 0.2) / (Z_FAR * f) // corridor curves right…
-      const bendY = (h * 0.05) / (Z_FAR * f) // …and slightly up
-      const P = (x, y, z) => [cx + (x + bendX * z * z) * (f / z), cy + (y - bendY * z * z) * (f / z)]
-      const depthAlpha = (z) => Math.pow(1 - clamp(z / Z_FAR), 0.7)
-
-      // base blue
-      const bg = ctx.createLinearGradient(0, 0, w, h)
-      bg.addColorStop(0, '#6a8cff')
-      bg.addColorStop(0.55, '#4a6ff0')
-      bg.addColorStop(1, '#3456d6')
-      ctx.fillStyle = bg
+      const cx = w / 2, cy = h / 2
+      // background: deep → blue, then flood with light at the end
+      let bg = ramp(DEEP, clamp(t / 0.72))
+      if (t > 0.72) bg = mix(ramp(LIGHT, clamp((t - 0.72) / 0.2)), GROUND, smooth(clamp((t - 0.86) / 0.14)))
+      ctx.fillStyle = rgba(bg)
       ctx.fillRect(0, 0, w, h)
 
-      // drifting bokeh
-      const ts = (now - start) / 1000
-      for (const b of blobs) {
-        const bx = (b.x + 0.06 * Math.sin(ts * 0.3 * b.s + b.p)) * w
-        const by = (b.y + 0.05 * Math.cos(ts * 0.25 * b.s + b.p)) * h
-        const g = ctx.createRadialGradient(bx, by, 0, bx, by, b.r * Math.max(w, h))
-        g.addColorStop(0, 'rgba(160,185,255,0.35)')
-        g.addColorStop(1, 'rgba(160,185,255,0)')
-        ctx.fillStyle = g
-        ctx.fillRect(0, 0, w, h)
-      }
-
-      // light at the end of the tunnel — blooms as loading completes
-      const [vx, vy] = P(0, 0, Z_FAR * 0.5)
-      const bloom = 0.22 + 0.5 * Math.pow(t, 3)
-      const glow = ctx.createRadialGradient(vx, vy, 0, vx, vy, Math.max(w, h) * bloom)
-      glow.addColorStop(0, 'rgba(235,242,255,0.95)')
-      glow.addColorStop(0.25, 'rgba(190,210,255,0.55)')
-      glow.addColorStop(1, 'rgba(120,150,255,0)')
-      ctx.fillStyle = glow
-      ctx.fillRect(0, 0, w, h)
-
-      ctx.lineCap = 'round'
-
-      // longitudinal grid lines along walls, floor and ceiling (they curve with the bend)
-      const rails = []
-      const NX = 12, NY = 8
-      for (let i = 0; i <= NX; i++) {
-        const x = -HW + (2 * HW * i) / NX
-        rails.push([x, HH], [x, -HH])
-      }
-      for (let j = 1; j < NY; j++) {
-        const y = -HH + (2 * HH * j) / NY
-        rails.push([HW, y], [-HW, y])
-      }
-      for (const [x, y] of rails) {
-        let prev = null
-        for (let z = Z_NEAR; z <= Z_FAR; z *= 1.12) {
-          const p = P(x, y, z)
-          if (prev) {
-            const a = depthAlpha(z)
-            ctx.strokeStyle = `rgba(235,240,255,${(0.42 * a).toFixed(3)})`
-            ctx.lineWidth = Math.max(0.6, 1.1 * dpr * a)
-            ctx.beginPath()
-            ctx.moveTo(prev[0], prev[1])
-            ctx.lineTo(p[0], p[1])
-            ctx.stroke()
-          }
-          prev = p
-        }
-      }
-
-      // cross-section rings rushing toward the camera
-      const off = camZ % RING_GAP
-      for (let z = RING_GAP - off; z < Z_FAR; z += RING_GAP) {
-        if (z < Z_NEAR) continue
-        const a = depthAlpha(z) * clamp((z - Z_NEAR) / 0.8) // fade in as it reaches the lens
-        const tl = P(-HW, -HH, z), tr = P(HW, -HH, z), br = P(HW, HH, z), bl = P(-HW, HH, z)
-        ctx.strokeStyle = `rgba(235,240,255,${(0.45 * a).toFixed(3)})`
-        ctx.lineWidth = Math.max(0.6, 1.2 * dpr * a)
+      // tunnel of rounded frames rushing toward the camera
+      const speed = 0.35 + 2.6 * t * t
+      const camZ = (now - start) / 1000 * speed
+      const fade = 1 - smooth(clamp((t - 0.8) / 0.2))
+      for (let i = 0; i < RINGS; i++) {
+        let z = ((i / RINGS - camZ) % 1 + 1) % 1 // 0 near, 1 far
+        const scale = 0.06 / (z * z + 0.012)
+        const rw = (w * 0.34) * scale, rh = (h * 0.3) * scale
+        if (rw > w * 3) continue
+        const depth = 1 - z
+        ctx.strokeStyle = rgba(ramp(LIGHT, clamp(depth * 0.9 + t * 0.2)), (0.12 + depth * 0.55) * fade)
+        ctx.lineWidth = Math.max(1, 2.2 * dpr * depth)
+        const r = Math.min(rw, rh) * 0.08
         ctx.beginPath()
-        ctx.moveTo(tl[0], tl[1])
-        ctx.lineTo(tr[0], tr[1])
-        ctx.lineTo(br[0], br[1])
-        ctx.lineTo(bl[0], bl[1])
-        ctx.closePath()
+        ctx.roundRect(cx - rw / 2, cy - rh / 2, rw, rh, r)
         ctx.stroke()
       }
 
-      // dust motes
-      for (const d of dust) {
-        d.z -= dt * speed
-        if (d.z < Z_NEAR) d.z += 24
-        const [px, py] = P(d.x, d.y, d.z)
-        ctx.fillStyle = `rgba(240,245,255,${(depthAlpha(d.z) * 0.8).toFixed(3)})`
-        ctx.beginPath()
-        ctx.arc(px, py, d.r * dpr * Math.min(2.5, 2 / d.z + 0.3), 0, Math.PI * 2)
-        ctx.fill()
+      // star streaks
+      for (const s of stars) {
+        s.r += 0.0025 * s.s * speed * 3
+        if (s.r > 1.2) { s.r = 0.02; s.a = Math.random() * Math.PI * 2 }
+        const R = Math.max(w, h) * 0.7
+        const len = 6 + 60 * t * s.s
+        const x1 = cx + Math.cos(s.a) * s.r * R, y1 = cy + Math.sin(s.a) * s.r * R
+        const x0 = x1 - Math.cos(s.a) * len * dpr * s.r, y0 = y1 - Math.sin(s.a) * len * dpr * s.r
+        ctx.strokeStyle = `rgba(220,230,255,${(0.25 + 0.6 * s.r) * fade})`
+        ctx.lineWidth = dpr * (0.6 + s.r)
+        ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke()
       }
 
-      // soft vignette
-      const vg = ctx.createRadialGradient(cx, cy, Math.min(w, h) * 0.3, cx, cy, Math.max(w, h) * 0.75)
-      vg.addColorStop(0, 'rgba(20,40,150,0)')
-      vg.addColorStop(1, 'rgba(20,40,150,0.35)')
-      ctx.fillStyle = vg
+      // glow core
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * (0.15 + t * 0.6))
+      g.addColorStop(0, `rgba(90,127,255,${0.45 * fade})`)
+      g.addColorStop(1, 'rgba(90,127,255,0)')
+      ctx.fillStyle = g
       ctx.fillRect(0, 0, w, h)
 
       setPct(Math.round(smooth(t) * 100))
@@ -185,12 +125,24 @@ export default function Loader() {
 
   if (state === 'gone') return null
   return (
-    <div className={`loader ${state === 'exit' ? 'is-exit' : ''}`} aria-hidden="true">
+    <div className={`loader ${state === 'exit' ? 'is-exit' : ''} ${pct >= 80 ? 'is-light' : ''}`} aria-hidden="true">
       <canvas ref={canvas} />
-      <p className="loader__label">
-        Loading <span className="loader__pct">{String(pct).padStart(2, '0')}%</span>
-      </p>
-      <h2 className="loader__name">{profile.fullName}.</h2>
+      <div className="loader__mark">
+        <span className="loader__name" aria-label={profile.fullName}>
+          {profile.fullName.split(' ').map((word, w, words) => {
+            const offset = words.slice(0, w).join('').length
+            return (
+              <span className="loader__word" key={w}>
+                {[...word].map((ch, i) => (
+                  <span className="loader__ch" key={i} style={{ '--i': offset + i }}>{ch}</span>
+                ))}
+              </span>
+            )
+          })}
+          <b className="loader__slash" style={{ '--i': profile.fullName.replace(/ /g, '').length }}>/</b>
+        </span>
+        <span className="loader__pct">{String(pct).padStart(3, '0')}%</span>
+      </div>
     </div>
   )
 }
