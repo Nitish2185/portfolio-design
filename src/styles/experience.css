@@ -157,3 +157,7 @@
     left: -32px;
   }
 }
+.xp__score {
+  color: var(--blue);
+  font-weight: 600;
+}

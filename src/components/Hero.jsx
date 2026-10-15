@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { profile, skills, story, projects, certifications, experience } from '../data'
+import { profile, skills, story, projects, certifications, education } from '../data'
 import { on, emit, onceFired } from '../lib/bus'
 import { flip, dust, useInView, usePageVisible, useReducedMotion } from '../lib/motion'
 import { Timeline } from '../lib/timeline'
@@ -592,7 +592,7 @@ export default function Hero() {
                   <div className="dash__kpis">
                     <div className="kpi kpi--blue"><span>Projects shipped</span><b>{projects.length}</b></div>
                     <div className="kpi"><span>Certifications</span><b>{certifications.length}</b></div>
-                    <div className="kpi"><span>Roles</span><b>{experience.length}</b></div>
+                    <div className="kpi"><span>MCA score</span><b>{parseFloat(education[0].score)}%</b></div>
                     <div className="kpi"><span>Coffee / week</span><b data-k="kCoffee">14.0</b></div>
                   </div>
                   <div className="dash__chart">
@@ -620,9 +620,9 @@ export default function Hero() {
                   <span className="doc__pill" data-k="pill"><Icon name="comment" size={12} /> 1 comment</span>
                   <div className="doc__cols">
                     <div>
-                      <p className="doc__h">Experience</p>
-                      {experience.slice(0, 3).map((e) => (
-                        <p className="doc__row" key={e.role}><b>{e.role}</b><span>{e.company} · {e.period}</span></p>
+                      <p className="doc__h">Education</p>
+                      {education.slice(0, 3).map((e) => (
+                        <p className="doc__row" key={e.title}><b>{e.title}</b><span>{e.school} · {e.score}</span></p>
                       ))}
                     </div>
                     <div>

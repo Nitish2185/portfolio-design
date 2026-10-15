@@ -52,38 +52,38 @@ export const skills = skillGroups.map((g) => ({ name: g.name, level: Math.round(
 
 export const toolkit = skillGroups.flatMap((g) => g.items)
 
-export const experience = [
+export const education = [
   {
-    role: 'Lorem Ipsum Engineer',
-    company: 'Lorem Corp',
+    title: 'Master of Computer Applications (MCA)',
+    school: 'ABES Engineering College',
     period: '2025 — Present',
-    location: 'Remote',
-    points: [LOREM, 'Duis aute irure dolor in reprehenderit in voluptate velit esse.'],
-    tags: ['Lorem', 'Ipsum', 'Dolor'],
+    score: '90.45%',
+    points: ['Building full-stack and AI projects alongside coursework in cloud computing, databases and software engineering.'],
+    tags: ['Cloud', 'DBMS', 'Full-stack'],
   },
   {
-    role: 'Dolor Sit Developer',
-    company: 'Ipsum Labs',
-    period: '2024 — 2025',
-    location: 'Lorem City',
-    points: [LOREM, 'Excepteur sint occaecat cupidatat non proident.'],
-    tags: ['Amet', 'Elit'],
+    title: 'Bachelor of Computer Applications (BCA)',
+    school: 'I.I.M.T College of Management',
+    period: '2021 — 2024',
+    score: '75.02%',
+    points: ['Foundations in programming, data structures, OOP and database management.'],
+    tags: ['C++', 'Java', 'SQL'],
   },
   {
-    role: 'Consectetur Intern',
-    company: 'Adipiscing Studio',
-    period: '2023 — 2024',
-    location: 'Ipsum Town',
-    points: [LOREM],
-    tags: ['Sed', 'Tempor'],
+    title: 'Intermediate (Class 12)',
+    school: 'Devasthaly Vidyapeeth',
+    period: '2019 — 2020',
+    score: '68.02%',
+    points: [],
+    tags: [],
   },
   {
-    role: 'B.Lorem in Ipsum Science',
-    company: 'University of Lorem',
-    period: '2020 — 2024',
-    location: 'Education',
-    points: ['Lorem ipsum dolor sit amet — CGPA 0.0 / 10.'],
-    tags: ['Education'],
+    title: 'High School (Class 10)',
+    school: 'Devasthaly Vidyapeeth',
+    period: '2017 — 2018',
+    score: '77.33%',
+    points: [],
+    tags: [],
   },
 ]
 
@@ -143,7 +143,7 @@ export const faqs = [
 
 export const nav = [
   { id: 'about', label: 'About' },
-  { id: 'experience', label: 'Experience' },
+  { id: 'education', label: 'Education' },
   { id: 'projects', label: 'Projects' },
   { id: 'certifications', label: 'Certifications' },
   { id: 'faq', label: 'FAQs' },

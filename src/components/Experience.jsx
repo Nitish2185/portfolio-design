@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { experience } from '../data'
+import { education } from '../data'
 import Reveal from '../lib/Reveal'
 import { prefersReduced } from '../lib/motion'
 import '../styles/experience.css'
@@ -49,33 +49,35 @@ export default function Experience() {
   }, [])
 
   return (
-    <section className="xp-sec" id="experience" ref={sec} style={{ '--n': experience.length }}>
+    <section className="xp-sec" id="education" ref={sec} style={{ '--n': education.length }}>
       <div className="xp-sticky">
         <div className="container xp-grid">
           <div className="xp-head">
-            <Reveal as="p" className="eyebrow">Experience</Reveal>
+            <Reveal as="p" className="eyebrow">Education</Reveal>
             <Reveal as="h2" className="h2" delay={0.08}>
-              Where I’ve <em>built</em> so far.
+              The road <em>so far.</em>
             </Reveal>
             <Reveal as="p" className="lead" delay={0.16}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit — keep scrolling to walk the timeline.
+              From high school to a Master’s in Computer Applications — keep scrolling to walk the timeline.
             </Reveal>
           </div>
           <div className="xp-frame">
             <div className="xp-rail"><i ref={rail} /></div>
             <ol className="xp-list" ref={list}>
-              {experience.map((e, i) => (
+              {education.map((e, i) => (
                 <li className="xp" key={i} style={{ '--i': i }}>
                   <span className="xp__dot" />
                   <div className="xp__top">
-                    <h3>{e.role}</h3>
+                    <h3>{e.title}</h3>
                     <span className="xp__period">{e.period}</span>
                   </div>
-                  <p className="xp__co">{e.company} · {e.location}</p>
-                  <ul>
-                    {e.points.map((p, j) => <li key={j}>{p}</li>)}
-                  </ul>
-                  <div className="xp__tags">{e.tags.map((t) => <span key={t}>{t}</span>)}</div>
+                  <p className="xp__co">{e.school} · <b className="xp__score">{e.score}</b></p>
+                  {e.points.length > 0 && (
+                    <ul>
+                      {e.points.map((p, j) => <li key={j}>{p}</li>)}
+                    </ul>
+                  )}
+                  {e.tags.length > 0 && <div className="xp__tags">{e.tags.map((t) => <span key={t}>{t}</span>)}</div>}
                 </li>
               ))}
             </ol>

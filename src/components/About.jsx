@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { profile, skillGroups, projects, certifications, experience } from '../data'
+import { profile, skillGroups, projects, certifications, education } from '../data'
 import Reveal from '../lib/Reveal'
 import { useInView, prefersReduced } from '../lib/motion'
 import Icon from './Icons'
@@ -99,7 +99,7 @@ export function About() {
 }
 
 /* Impact stats with count-up */
-function Count({ to, suffix = '' }) {
+function Count({ to, suffix = '', dec = 0 }) {
   const ref = useRef(null)
   const seen = useInView(ref, { threshold: 0.6, once: true })
   const [n, setN] = useState(0)
@@ -110,7 +110,7 @@ function Count({ to, suffix = '' }) {
     const t0 = performance.now()
     const tick = (now) => {
       const t = Math.min(1, (now - t0) / 1400)
-      setN(Math.round(to * (1 - Math.pow(1 - t, 4))))
+      setN(to * (1 - Math.pow(1 - t, 4)))
       if (t < 1) raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
@@ -118,7 +118,7 @@ function Count({ to, suffix = '' }) {
   }, [seen, to])
   return (
     <span ref={ref}>
-      {n.toLocaleString()}
+      {n.toLocaleString(undefined, { minimumFractionDigits: dec, maximumFractionDigits: dec })}
       {suffix}
     </span>
   )
@@ -126,21 +126,21 @@ function Count({ to, suffix = '' }) {
 
 export function Stats() {
   const stats = [
-    { n: projects.length, s: '+', label: 'projects built & shipped' },
+    { n: projects.length, s: '', label: 'featured projects' },
     { n: certifications.length, s: '', label: 'certifications earned' },
-    { n: experience.length, s: '', label: 'roles & milestones' },
+    { n: parseFloat(education[0].score), s: '%', dec: 2, label: 'MCA aggregate at ABES' },
   ]
   return (
     <section className="stats section">
       <div className="container">
         <Reveal as="p" className="eyebrow center">Impact</Reveal>
         <Reveal as="h2" className="h2 center" delay={0.08}>
-          Lorem ipsum, <em>by the numbers.</em>
+          A quick look, <em>by the numbers.</em>
         </Reveal>
         <div className="stats__row">
           {stats.map((s, i) => (
             <Reveal className="stat" key={s.label} delay={0.12 + i * 0.12}>
-              <b><Count to={s.n} suffix={s.s} /></b>
+              <b><Count to={s.n} suffix={s.s} dec={s.dec} /></b>
               <span>{s.label}</span>
             </Reveal>
           ))}
