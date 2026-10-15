@@ -1,14 +1,41 @@
-import { useEffect, useRef, useState } from 'react'
+import { Component, lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { profile, skillGroups, projects, certifications, education } from '../data'
 import Reveal from '../lib/Reveal'
-import { useInView, prefersReduced } from '../lib/motion'
+import { useInView, prefersReduced, isLowPower } from '../lib/motion'
 import Icon from './Icons'
 import Bot from './Bot'
+
+const TwistedRing = lazy(() => import('./three/TwistedRing'))
+
+// if the 3D chunk fails to load (offline, stale deploy), show the fallback instead of breaking the page
+class RingBoundary extends Component {
+  state = { failed: false }
+  static getDerivedStateFromError() {
+    return { failed: true }
+  }
+  render() {
+    return this.state.failed ? this.props.fallback : this.props.children
+  }
+}
+
+// lightweight stand-in for low-powered devices / reduced motion: CSS-rotated wireframe ellipses
+function RingFallback() {
+  return (
+    <svg className="ring-fallback" viewBox="-100 -100 200 200" aria-hidden="true">
+      {Array.from({ length: 9 }, (_, i) => (
+        <ellipse key={i} rx="78" ry={22 + i * 2} transform={`rotate(${i * 20})`} className={i % 3 === 0 ? 'hl' : ''} />
+      ))}
+    </svg>
+  )
+}
 import '../styles/about.css'
 
 /* Statement paragraph — each word brightens as it scrolls through the viewport */
 export function Statement() {
   const ref = useRef(null)
+  const section = useRef(null)
+  const onScreen = useInView(section, { threshold: 0 })
+  const [simple] = useState(() => prefersReduced() || isLowPower())
   const words = profile.statement.split(' ')
   useEffect(() => {
     const el = ref.current
@@ -33,12 +60,30 @@ export function Statement() {
     }
   }, [])
   return (
-    <section className="statement">
-      <p ref={ref}>
-        {words.map((w, i) => (
-          <span key={i}>{w} </span>
-        ))}
-      </p>
+    <section className="statement" ref={section}>
+      <div className="statement__grid">
+        {/* first half: the floating 3D twisted ring */}
+        <div className="statement__ring" aria-hidden="true">
+          <div className="statement__glow"><i /><i /></div>
+          <div className="statement__canvas">
+            {simple ? (
+              <RingFallback />
+            ) : (
+              <RingBoundary fallback={<RingFallback />}>
+                <Suspense fallback={<RingFallback />}>
+                  <TwistedRing running={onScreen} animate />
+                </Suspense>
+              </RingBoundary>
+            )}
+          </div>
+        </div>
+        {/* second half: the statement, lit word by word as you scroll */}
+        <p ref={ref}>
+          {words.map((w, i) => (
+            <span key={i}>{w} </span>
+          ))}
+        </p>
+      </div>
     </section>
   )
 }

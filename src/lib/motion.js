@@ -114,6 +114,20 @@ export function dust(el, swap, duration = 720, tl) {
       ghost.remove()
       el.classList.remove('px-in')
       r()
-    }, duration + 40),
+    }),
   )
+}
+
+/** Low-powered device or no WebGL → serve the simplified animation path. */
+export function isLowPower() {
+  if (typeof window === 'undefined') return true
+  const nav = navigator
+  if (nav.connection?.saveData) return true
+  if ((nav.hardwareConcurrency || 8) <= 2 || (nav.deviceMemory || 8) <= 2) return true
+  try {
+    const c = document.createElement('canvas')
+    return !(c.getContext('webgl2') || c.getContext('webgl'))
+  } catch {
+    return true
+  }
 }
