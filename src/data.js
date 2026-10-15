@@ -1,9 +1,7 @@
 // ─────────────────────────────────────────────────────────────
-//  All portfolio content lives here. Replace the lorem ipsum
-//  placeholders with your real details — the UI updates itself.
+//  All portfolio content lives here — edit this file and the
+//  UI updates itself.
 // ─────────────────────────────────────────────────────────────
-
-const LOREM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
 
 export const profile = {
   name: 'Priyanshu',
@@ -20,14 +18,14 @@ export const profile = {
     'MCA student at ABES Engineering College building REST APIs and database-driven apps with Node.js, Express, MongoDB and React — with a soft spot for AI and the cloud.',
   tagline: ['learn', 'build', 'ship'],
   statement:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus — posuere velit aliquet. Nullam quis risus eget urna mollis ornare vel eu leo, in a new era of building on the web.',
+    'I build REST APIs and database-driven web apps — from webhook platforms to multi-agent AI advisors — on solid foundations in cloud computing, databases and data structures.',
   about: {
     title: 'Where I design, build and ship.',
-    body: LOREM + ' Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+    body: 'I’m an MCA student at ABES Engineering College with hands-on experience building full-stack apps with Node.js, Express.js, MongoDB and React.js. I enjoy turning ideas into working products — webhook infrastructure, AI-powered finance tools, travel and fitness apps — and deploying them with AWS and Docker.',
     points: [
-      { icon: 'bot', title: 'Lorem-first', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
-      { icon: 'globe', title: 'Based in Lorem', text: 'Sed do eiusmod tempor incididunt ut labore et dolore.' },
-      { icon: 'seal', title: 'Open to work', text: 'Ut enim ad minim veniam, quis nostrud exercitation.' },
+      { icon: 'bot', title: 'AI-curious builder', text: 'Multi-agent workflows with LangChain and Gemini, from finance advice to quiz generation.' },
+      { icon: 'globe', title: 'Cloud-ready', text: 'NPTEL Cloud Computing (Elite, 85%) and hands-on with AWS services and Docker.' },
+      { icon: 'seal', title: 'Open to work', text: 'Looking for software development internships and entry-level roles.' },
     ],
   },
   socials: [
@@ -195,12 +193,12 @@ export const certifications = [
 ]
 
 export const faqs = [
-  { q: 'Are you open to new opportunities?', a: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-  { q: 'What kind of work do you do?', a: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' },
-  { q: 'What is your tech stack?', a: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' },
-  { q: 'Do you take freelance projects?', a: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' },
-  { q: 'Where are you based?', a: 'Lorem ipsum dolor sit amet. Remote-friendly across time zones, consectetur adipiscing elit.' },
-  { q: 'How do I reach you fastest?', a: 'Use the contact form below or email directly — lorem ipsum, I usually reply within a day.' },
+  { q: 'Are you open to new opportunities?', a: 'Yes — I’m looking for software development internships and entry-level roles, especially in full-stack, backend or cloud work.' },
+  { q: 'What kind of work do you do?', a: 'Full-stack web development: REST APIs and database-driven apps with Node.js, Express.js and MongoDB, React front ends, and AI features built with LangChain and Gemini.' },
+  { q: 'What is your tech stack?', a: 'JavaScript (ES6+), React.js, Node.js, Express.js, MongoDB, MySQL and PostgreSQL, Tailwind CSS — plus Python, C++, Java and SQL. On the cloud side: Docker and AWS (EC2, S3, CloudFront, IAM, RDS, DynamoDB and more).' },
+  { q: 'What are you studying?', a: 'A Master of Computer Applications at ABES Engineering College (2025–present, 90.45%), after a BCA from I.I.M.T College of Management.' },
+  { q: 'Where can I see your code?', a: 'On GitHub at github.com/Priyanshu2068 — Prepare.ai, Voyager and FitPulse also have live demos linked from the Projects section.' },
+  { q: 'How do I reach you fastest?', a: 'Use the contact form below or email prish.3d@gmail.com directly.' },
 ]
 
 export const nav = [
@@ -215,24 +213,24 @@ export const nav = [
 export const story = {
   documents: ['about.sh', 'projects.html', 'resume.pdf'],
   boot: [
-    '[ok] booting nitish.dev',
+    '[ok] booting ' + profile.handle + '.dev',
     '[ok] loading profile',
     '[ok] 0 errors · ready',
   ],
   prompt: 'whoami --verbose',
   fetch: [
-    '> name      [Nitish]',
+    '> name      [' + profile.fullName + ']',
     '> role      [' + profile.role + ']',
-    '> based in  [' + profile.location + ']',
+    '> studying  [MCA · ABES Engineering College]',
     '> status    [open to work]',
   ],
-  share: { placeholder: 'Add email to share…', typed: 'hello@lorem.com', button: 'Send', done: 'Sent ✓' },
+  share: { placeholder: 'Add email to share…', typed: 'recruiter@company.com', button: 'Send', done: 'Sent ✓' },
   composer: 'Make this resume hire-ready',
   prdTitle: 'Resume — draft v1',
   prdRewritten: 'Resume — ' + profile.role,
   thread: [
     { who: 'You', text: 'Make this resume hire-ready' },
-    { who: 'Nitish’s agent', text: 'On it — tightening the title and impact lines.', bot: true },
-    { who: 'Nitish’s agent', text: 'Done. Title updated ✓', bot: true },
+    { who: profile.name + '’s agent', text: 'On it — tightening the title and impact lines.', bot: true },
+    { who: profile.name + '’s agent', text: 'Done. Title updated ✓', bot: true },
   ],
 }

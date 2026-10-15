@@ -20,7 +20,7 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
   const $ = (k) => root.querySelector(`[data-k="${k}"]`)
   const k = {}
   ;['card', 'dk', 'docName', 'ttl', 'tlog', 'task', 'sField', 'sGo', 'cBox', 'cSend', 'prdT', 'pill',
-    'm1', 'm2', 'm3', 'chip', 'chipText', 'thread', 'dark', 'sTip', 'kTip', 'kCoffee', 'prdLine'].forEach((n) => (k[n] = $(n)))
+    'm1', 'm2', 'm3', 'chip', 'chipText', 'thread', 'dark', 'sTip', 'kTip', 'prdLine'].forEach((n) => (k[n] = $(n)))
   const scenes = [...root.querySelectorAll('[data-scene]')]
   const panels = [...root.querySelectorAll('[data-panel]')]
   const skillBars = [...root.querySelectorAll('[data-skill]')]
@@ -93,7 +93,6 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
           k.kTip.textContent = String(Math.round(18 + w(3, 0.31, 3.9)))
         }
       })
-      k.kCoffee.textContent = (14 + w(0.6, 0.21, 0) + w(0.2, 0.93, 1.2)).toFixed(1)
     } else {
       const pts = [[0, 30], [40, 22], [80, 26], [120, 14], [160, 18], [200, 8], [240, 12]]
       k.prdLine.setAttribute('points', pts.map(([x, y], i) => `${x},${y + 4 * Math.sin(0.29 * t + 0.9 * i) + 1.5 * Math.sin(0.9 * t + 1.7 * i)}`).join(' '))
@@ -593,10 +592,10 @@ export default function Hero() {
                     <div className="kpi kpi--blue"><span>Projects shipped</span><b>{projects.length}</b></div>
                     <div className="kpi"><span>Certifications</span><b>{certifications.length}</b></div>
                     <div className="kpi"><span>MCA score</span><b>{parseFloat(education[0].score)}%</b></div>
-                    <div className="kpi"><span>Coffee / week</span><b data-k="kCoffee">14.0</b></div>
+                    <div className="kpi"><span>Live demos</span><b>{projects.filter((p) => p.live).length}</b></div>
                   </div>
                   <div className="dash__chart">
-                    <div className="dash__chart-head"><span>Commits this week</span><em>Lorem ipsum</em></div>
+                    <div className="dash__chart-head"><span>Build activity</span><em>illustrative</em></div>
                     <div className="week">
                       {DAYS.map((d, i) => (
                         <div className="week__col" key={i}>
