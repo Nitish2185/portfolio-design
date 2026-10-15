@@ -1,4 +1,4 @@
-# Nitish — Portfolio
+# Priyanshu Tripathi — Portfolio
 
 React (Vite) portfolio with motion modeled on razorpay.com/slash-docs, plus an Express + Nodemailer (SMTP) contact API.
 

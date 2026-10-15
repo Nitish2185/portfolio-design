@@ -96,7 +96,7 @@ app.post('/api/contact', async (req, res) => {
           from,
           to: e,
           subject: 'Thanks for reaching out!',
-          text: `Hi ${n},\n\nThanks for your message — I've received it and will get back to you soon.\n\n— Nitish`,
+          text: `Hi ${n},\n\nThanks for your message — I've received it and will get back to you soon.\n\n— Priyanshu Tripathi`,
         })
         .catch((err) => console.warn('[mail] auto-reply failed:', err.message))
     }

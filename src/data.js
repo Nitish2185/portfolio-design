@@ -6,17 +6,18 @@
 const LOREM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
 
 export const profile = {
-  name: 'Nitish',
-  fullName: 'Nitish Lorem', // TODO: your full name
-  handle: 'nitish',
-  role: 'Lorem Ipsum Developer', // TODO: e.g. "Full-Stack Developer"
-  location: 'Lorem City, Ipsum', // TODO
-  email: 'testtillperfect@gmail.com',
+  name: 'Priyanshu',
+  fullName: 'Priyanshu Tripathi',
+  handle: 'priyanshu',
+  role: 'Full-Stack Developer',
+  location: 'India',
+  email: 'prish.3d@gmail.com',
+  phone: '+91-8957208526',
   resume: '/resume.pdf', // replace public/resume.pdf with your own
   openToWork: true,
-  headline: ['Hi, I’m Nitish.', 'I build for the web.'],
+  headline: ['Hi, I’m Priyanshu.', 'I build for the web.'],
   intro:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua — ut enim ad minim veniam.',
+    'MCA student at ABES Engineering College building REST APIs and database-driven apps with Node.js, Express, MongoDB and React — with a soft spot for AI and the cloud.',
   tagline: ['learn', 'build', 'ship'],
   statement:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus — posuere velit aliquet. Nullam quis risus eget urna mollis ornare vel eu leo, in a new era of building on the web.',
@@ -30,10 +31,9 @@ export const profile = {
     ],
   },
   socials: [
-    { label: 'GitHub', href: 'https://github.com/Nitish2185', icon: 'github' },
-    { label: 'LinkedIn', href: '#', icon: 'linkedin' }, // TODO
-    { label: 'X', href: '#', icon: 'x' }, // TODO
-    { label: 'Instagram', href: '#', icon: 'instagram' }, // TODO
+    { label: 'GitHub', href: 'https://github.com/Priyanshu2068', icon: 'github' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/priyanshu2068/', icon: 'linkedin' },
+    { label: 'LeetCode', href: 'https://leetcode.com/u/priyanshu2068/', icon: 'leetcode' },
   ],
 }
 

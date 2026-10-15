@@ -51,7 +51,7 @@ export default function Contact() {
           <Reveal as="p" className="eyebrow">Connect</Reveal>
           <Reveal as="h2" className="h2" delay={0.08}>Let’s talk.</Reveal>
           <Reveal as="p" className="lead" delay={0.16}>
-            Have a role, a project, or just want to say hi? Lorem ipsum dolor sit amet — my inbox is always open.
+            Hiring for an internship or developer role, have a project in mind, or just want to say hi? My inbox is always open.
           </Reveal>
           <Reveal className="contact__mail" delay={0.24}>
             <a href={`mailto:${profile.email}`}><Icon name="mail" size={18} /> {profile.email}</a>
@@ -59,6 +59,11 @@ export default function Contact() {
               <Icon name={copied ? 'check' : 'copy'} size={16} /> {copied ? 'Copied' : 'Copy'}
             </button>
           </Reveal>
+          {profile.phone && (
+            <Reveal className="contact__mail" delay={0.28}>
+              <a href={`tel:${profile.phone.replace(/[^+\d]/g, '')}`}><Icon name="phone" size={18} /> {profile.phone}</a>
+            </Reveal>
+          )}
           <Reveal className="contact__socials" delay={0.32}>
             {profile.socials.map((s) => (
               <a key={s.label} href={s.href} target="_blank" rel="noreferrer" aria-label={s.label}>
@@ -72,11 +77,11 @@ export default function Contact() {
           <div className="field-row">
             <label className="field">
               <span>Name</span>
-              <input required minLength={2} maxLength={100} value={form.name} onChange={set('name')} placeholder="Lorem Ipsum" />
+              <input required minLength={2} maxLength={100} value={form.name} onChange={set('name')} placeholder="Your name" />
             </label>
             <label className="field">
               <span>Email</span>
-              <input required type="email" value={form.email} onChange={set('email')} placeholder="you@lorem.com" />
+              <input required type="email" value={form.email} onChange={set('email')} placeholder="you@company.com" />
             </label>
           </div>
           <label className="field">

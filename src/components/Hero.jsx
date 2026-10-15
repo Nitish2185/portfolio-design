@@ -550,7 +550,7 @@ export default function Hero() {
                 <span className="win__icons">
                   <Icon name="share" size={15} />
                   <Icon name="comment" size={15} />
-                  <span className="win__avatar">N</span>
+                  <span className="win__avatar">{profile.name[0]}</span>
                 </span>
               </div>
 
@@ -654,7 +654,7 @@ export default function Hero() {
                 </div>
                 <p className="share__label">People with access</p>
                 <div className="share__people">
-                  <span className="pp" style={{ background: '#0039ff' }}>N</span>
+                  <span className="pp" style={{ background: '#0039ff' }}>{profile.name[0]}</span>
                   <span className="pp" style={{ background: '#5A7FFF' }}>L</span>
                   <span className="pp" style={{ background: '#8a8a90' }}>I</span>
                   <em>Anyone with the link can view</em>
