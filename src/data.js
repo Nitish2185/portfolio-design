@@ -162,13 +162,36 @@ export const projects = [
   },
 ]
 
+// url: add the credential link to show a Verify button
 export const certifications = [
-  { title: 'Lorem Ipsum Certified', issuer: 'Lorem Academy', date: '2026', id: 'LOREM-0001', url: '#' },
-  { title: 'Dolor Sit Professional', issuer: 'Ipsum Institute', date: '2025', id: 'IPSUM-0002', url: '#' },
-  { title: 'Amet Cloud Associate', issuer: 'Dolor Cloud', date: '2025', id: 'DOLOR-0003', url: '#' },
-  { title: 'Consectetur Fundamentals', issuer: 'Elit Foundation', date: '2024', id: 'ELIT-0004', url: '#' },
-  { title: 'Adipiscing Specialist', issuer: 'Tempor Org', date: '2024', id: 'TEMP-0005', url: '#' },
-  { title: 'Sed Do Practitioner', issuer: 'Magna University', date: '2023', id: 'MAGN-0006', url: '#' },
+  {
+    title: 'Cloud Computing (Elite)',
+    issuer: 'NPTEL · IIT Kharagpur',
+    date: '12 weeks',
+    meta: [['Score', '85%'], ['Grade', 'Elite'], ['Duration', '12 weeks']],
+    url: null,
+  },
+  {
+    title: 'AWS Cloud Practitioner (CLF-C02)',
+    issuer: 'Udemy',
+    date: '14.5 hours',
+    meta: [['Exam', 'CLF-C02'], ['Course', '14.5 hours']],
+    url: null,
+  },
+  {
+    title: 'Software Engineer Intern',
+    issuer: 'HackerRank',
+    date: 'Certified',
+    meta: [['Issuer', 'HackerRank'], ['Type', 'Role certification']],
+    url: null,
+  },
+  {
+    title: 'Python Essentials 1',
+    issuer: 'Cisco Networking Academy',
+    date: 'Certified',
+    meta: [['Issuer', 'Cisco NetAcad'], ['Track', 'Python']],
+    url: null,
+  },
 ]
 
 export const faqs = [

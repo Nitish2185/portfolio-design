@@ -7,7 +7,7 @@ import '../styles/certifications.css'
 function Cert({ c, i }) {
   const [flipped, setFlipped] = useState(false)
   return (
-    <Reveal className="cert-wrap" delay={0.08 + (i % 3) * 0.12} variant="flip">
+    <Reveal className="cert-wrap" delay={0.08 + (i % 4) * 0.12} variant="flip">
       <div
         className={`cert ${flipped ? 'is-flipped' : ''}`}
         role="button"
@@ -35,12 +35,14 @@ function Cert({ c, i }) {
         <div className="cert__face cert__back">
           <span className="cert__issuer">Credential</span>
           <span className="cert__title">{c.title}</span>
-          <span className="cert__meta"><b>Issuer</b>{c.issuer}</span>
-          <span className="cert__meta"><b>Issued</b>{c.date}</span>
-          <span className="cert__meta"><b>ID</b><code>{c.id}</code></span>
-          <a className="btn btn--white btn--sm" href={c.url} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
-            Verify <Icon name="external" size={14} />
-          </a>
+          {c.meta.map(([k, v]) => (
+            <span className="cert__meta" key={k}><b>{k}</b>{v}</span>
+          ))}
+          {c.url && (
+            <a className="btn btn--white btn--sm" href={c.url} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
+              Verify <Icon name="external" size={14} />
+            </a>
+          )}
         </div>
       </div>
     </Reveal>
@@ -56,11 +58,11 @@ export default function Certifications() {
           Always learning, <em>always shipping.</em>
         </Reveal>
         <Reveal as="p" className="lead center" delay={0.16}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hover or tap a card to flip it.
+          Cloud, AWS, software engineering and Python — hover or tap a card to flip it.
         </Reveal>
         <div className="certs__grid">
           {certifications.map((c, i) => (
-            <Cert c={c} i={i} key={c.id} />
+            <Cert c={c} i={i} key={c.title} />
           ))}
         </div>
       </div>
