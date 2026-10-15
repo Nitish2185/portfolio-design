@@ -6,51 +6,110 @@ endobj
 << /Type /Pages /Kids [3 0 R] /Count 1 >>
 endobj
 3 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R /F3 7 0 R >> >> >>
 endobj
 4 0 obj
-<< /Length 1165 >>
+<< /Length 6287 >>
 stream
-BT
-/F2 26 Tf 1 0 0 1 56 780 Tm (Nitish Lorem) Tj
-/F1 12 Tf 1 0 0 1 56 744 Tm (Lorem Ipsum Developer  |  testtillperfect@gmail.com  |  github.com/Nitish2185) Tj
-/F1 12 Tf 1 0 0 1 56 722 Tm () Tj
-/F2 14 Tf 1 0 0 1 56 700 Tm (Summary) Tj
-/F1 11 Tf 1 0 0 1 56 676 Tm (Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.) Tj
-/F1 11 Tf 1 0 0 1 56 655 Tm () Tj
-/F2 14 Tf 1 0 0 1 56 634 Tm (Experience) Tj
-/F1 11 Tf 1 0 0 1 56 610 Tm (Lorem Ipsum Engineer - Lorem Corp (2025 - Present)) Tj
-/F1 11 Tf 1 0 0 1 56 589 Tm (Dolor Sit Developer - Ipsum Labs (2024 - 2025)) Tj
-/F1 11 Tf 1 0 0 1 56 568 Tm (Consectetur Intern - Adipiscing Studio (2023 - 2024)) Tj
-/F1 11 Tf 1 0 0 1 56 547 Tm () Tj
-/F2 14 Tf 1 0 0 1 56 526 Tm (Education) Tj
-/F1 11 Tf 1 0 0 1 56 502 Tm (B.Lorem in Ipsum Science - University of Lorem (2020 - 2024)) Tj
-/F1 11 Tf 1 0 0 1 56 481 Tm () Tj
-/F2 14 Tf 1 0 0 1 56 460 Tm (Skills) Tj
-/F1 11 Tf 1 0 0 1 56 436 Tm (Lorem, Ipsum, Dolor, Sit, Amet, Elit, Sed) Tj
-/F1 11 Tf 1 0 0 1 56 415 Tm () Tj
-/F1 10 Tf 1 0 0 1 56 394 Tm (Placeholder resume - replace public/resume.pdf with your own.) Tj
-ET
-0 0.22 1 RG 2 w 56 742 m 539 742 l S
+BT 0.12 0.33 0.58 rg /F2 22 Tf 178.7 786.0 Td (Priyanshu Tripathi) Tj ET
+BT 0 0 0 rg /F1 7.6 Tf 26.8 768.0 Td (+91-8957208526  |  prish.3d@gmail.com  |  github.com/Priyanshu2068  |  linkedin.com/in/priyanshu2068  |  leetcode.com/u/priyanshu2068) Tj ET
+BT 0.12 0.33 0.58 rg /F2 12 Tf 50.0 750.0 Td (PROFILE SUMMARY) Tj ET
+0.12 0.33 0.58 RG 0.8 w 50 745.0 m 545 745.0 l S
+BT 0 0 0 rg /F1 9.5 Tf 50.0 730.0 Td (MCA student with hands-on experience in web application development, building REST APIs and) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 50.0 717.0 Td (database-driven applications using Node.js, Express.js, MongoDB, and React.js. Experienced in developing) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 50.0 704.0 Td (projects involving webhook management and AI-powered financial analysis. Strong foundation in cloud) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 50.0 691.0 Td (computing, databases, data structures, and software development, with practical exposure to AWS and) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 50.0 678.0 Td (Docker. NPTEL Cloud Computing certified with 85%, demonstrating a strong understanding of cloud) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 50.0 665.0 Td (computing concepts and technologies.) Tj ET
+BT 0.12 0.33 0.58 rg /F2 12 Tf 50.0 644.0 Td (EDUCATION) Tj ET
+0.12 0.33 0.58 RG 0.8 w 50 639.0 m 545 639.0 l S
+BT 0 0 0 rg /F2 10 Tf 50.0 624.0 Td (Master of Computer Application) Tj ET
+BT 0 0 0 rg /F1 10 Tf 475.0 624.0 Td (\(2025-Present\)) Tj ET
+BT 0 0 0 rg /F3 9.5 Tf 50.0 612.0 Td (ABES Engineering College) Tj ET
+BT 0 0 0 rg /F3 9.5 Tf 516.5 612.0 Td (90.45%) Tj ET
+BT 0 0 0 rg /F2 10 Tf 50.0 597.0 Td (Bachelor of Computer Applications) Tj ET
+BT 0 0 0 rg /F1 10 Tf 490.0 597.0 Td (\(2021-2024\)) Tj ET
+BT 0 0 0 rg /F3 9.5 Tf 50.0 585.0 Td (I.I.M.T College Of Management) Tj ET
+BT 0 0 0 rg /F3 9.5 Tf 516.5 585.0 Td (75.02%) Tj ET
+BT 0 0 0 rg /F2 10 Tf 50.0 570.0 Td (Intermediate) Tj ET
+BT 0 0 0 rg /F1 10 Tf 490.0 570.0 Td (\(2019-2020\)) Tj ET
+BT 0 0 0 rg /F3 9.5 Tf 50.0 558.0 Td (Devasthaly Vidyapeeth) Tj ET
+BT 0 0 0 rg /F3 9.5 Tf 516.5 558.0 Td (68.02%) Tj ET
+BT 0 0 0 rg /F2 10 Tf 50.0 543.0 Td (High School \(10th\)) Tj ET
+BT 0 0 0 rg /F1 10 Tf 490.0 543.0 Td (\(2017-2018\)) Tj ET
+BT 0 0 0 rg /F3 9.5 Tf 50.0 531.0 Td (Devasthaly Vidyapeeth) Tj ET
+BT 0 0 0 rg /F3 9.5 Tf 516.5 531.0 Td (77.33%) Tj ET
+BT 0.12 0.33 0.58 rg /F2 12 Tf 50.0 508.0 Td (TECHNICAL SKILLS) Tj ET
+0.12 0.33 0.58 RG 0.8 w 50 503.0 m 545 503.0 l S
+BT 0 0 0 rg /F2 9.5 Tf 50.0 488.0 Td (Languages:) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 113.0 488.0 Td (C++, HTML/CSS, JavaScript \(ES6+\), Python, Java, SQL) Tj ET
+BT 0 0 0 rg /F2 9.5 Tf 50.0 475.0 Td (Frameworks:) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 118.7 475.0 Td (React.js, Node.js, Express.js, Tailwind CSS, Bootstrap) Tj ET
+BT 0 0 0 rg /F2 9.5 Tf 50.0 462.0 Td (Databases:) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 113.0 462.0 Td (MongoDB, MySQL, PostgreSQL) Tj ET
+BT 0 0 0 rg /F2 9.5 Tf 50.0 449.0 Td (Tools:) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 90.2 449.0 Td (Git, GitHub, Postman) Tj ET
+BT 0 0 0 rg /F2 9.5 Tf 50.0 436.0 Td (Cloud:) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 90.2 436.0 Td (Docker, Amazon EC2, S3, CloudFront, Redshift, IAM, ELB, Route53, RDS, DynamoDB) Tj ET
+BT 0 0 0 rg /F2 9.5 Tf 50.0 423.0 Td (Concepts:) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 107.3 423.0 Td (REST APIs, DBMS, OOP, Data Structures) Tj ET
+BT 0.12 0.33 0.58 rg /F2 12 Tf 50.0 402.0 Td (PROJECTS) Tj ET
+0.12 0.33 0.58 RG 0.8 w 50 397.0 m 545 397.0 l S
+BT 0 0 0 rg /F2 10 Tf 50.0 382.0 Td (AI Personal Finance Advisor) Tj ET
+BT 0 0 0 rg /F3 9 Tf 218.0 382.0 Td (|  Python, LangChain, Google Gemini Flash API, yFinance) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 56.0 368.0 Td (•) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 68.0 368.0 Td (Developed an AI-powered personal finance advisor supporting 2 recommendation domains: savings and) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 68.0 355.0 Td (investment, with natural-language financial data extraction.) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 56.0 342.0 Td (•) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 68.0 342.0 Td (Designed a modular multi-agent workflow with 5 specialized components for financial calculation,) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 68.0 329.0 Td (market analysis, savings analysis, investment analysis, and consolidated reporting.) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 56.0 316.0 Td (•) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 68.0 316.0 Td (Integrated yFinance for live market data retrieval and implemented a Planner Agent for dynamic) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 68.0 303.0 Td (workflow orchestration and personalized financial analysis.) Tj ET
+BT 0 0 0 rg /F2 10 Tf 50.0 284.0 Td (Webhook Manager) Tj ET
+BT 0 0 0 rg /F3 9 Tf 146.0 284.0 Td (|  Node.js, Express.js, MongoDB, React) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 56.0 270.0 Td (•) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 68.0 270.0 Td (Built a centralized webhook management platform with 9 RESTful API endpoints for webhook) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 68.0 257.0 Td (registration, event management, monitoring, and replay of failed webhook events.) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 56.0 244.0 Td (•) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 68.0 244.0 Td (Developed the backend using Node.js and Express.js, implementing JWT-based authentication and) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 68.0 231.0 Td (MongoDB/Mongoose data models for managing users, webhook configurations, and event payloads.) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 56.0 218.0 Td (•) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 68.0 218.0 Td (Implemented webhook ingestion through token-based endpoints, storing incoming JSON payloads and) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 68.0 205.0 Td (delivery status in MongoDB, with a React.js dashboard for event inspection, monitoring, and replay.) Tj ET
+BT 0.12 0.33 0.58 rg /F2 12 Tf 50.0 184.0 Td (CERTIFICATIONS) Tj ET
+0.12 0.33 0.58 RG 0.8 w 50 179.0 m 545 179.0 l S
+BT 0 0 0 rg /F2 9.5 Tf 50.0 164.0 Td (Cloud Computing \(Elite\) | 85%) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 221.3 164.0 Td (|  NPTEL \(IIT Kharagpur\)  |  12 weeks) Tj ET
+BT 0 0 0 rg /F2 9.5 Tf 50.0 151.0 Td (AWS Cloud Practitioner Certification CLF-C02) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 306.8 151.0 Td (|  Udemy  |  14.5 hours) Tj ET
+BT 0 0 0 rg /F2 9.5 Tf 50.0 138.0 Td (Software Engineer Intern) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 192.8 138.0 Td (|  HackerRank) Tj ET
+BT 0 0 0 rg /F2 9.5 Tf 50.0 125.0 Td (Python Essentials 1) Tj ET
+BT 0 0 0 rg /F1 9.5 Tf 164.3 125.0 Td (|  Cisco Networking Academy) Tj ET
 endstream
 endobj
 5 0 obj
-<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
 endobj
 6 0 obj
-<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+7 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding >>
 endobj
 xref
-0 7
+0 8
 0000000000 65535 f 
 0000000009 00000 n 
 0000000058 00000 n 
 0000000115 00000 n 
-0000000251 00000 n 
-0000001467 00000 n 
-0000001537 00000 n 
+0000000261 00000 n 
+0000006599 00000 n 
+0000006696 00000 n 
+0000006798 00000 n 
 trailer
-<< /Size 7 /Root 1 0 R >>
+<< /Size 8 /Root 1 0 R /Info << /Title (Priyanshu Tripathi - Resume) /Author (Priyanshu Tripathi) >> >>
 startxref
-1612
+6903
 %%EOF
