@@ -82,8 +82,11 @@ export function flip(el, swap, dir = 1, speed = 1, tl) {
   })
 }
 
-/** "Dust" swap — a ghost copy blurs away with a blue glow while the real element updates. */
-export function dust(el, swap, duration = 720) {
+/**
+ * "Dust" swap — a ghost copy blurs away with a blue glow while the real element updates.
+ * Pass a Timeline as `tl` so the waits pause and hurry along with it.
+ */
+export function dust(el, swap, duration = 720, tl) {
   if (!el || prefersReduced()) {
     swap()
     return Promise.resolve()
@@ -104,9 +107,10 @@ export function dust(el, swap, duration = 720) {
   el.classList.remove('px-in')
   void el.offsetWidth
   el.classList.add('px-in')
-  setTimeout(swap, duration * 0.4)
+  const after = (ms, fn) => (tl ? tl.after(ms, fn) : setTimeout(fn, ms))
+  after(duration * 0.4, swap)
   return new Promise((r) =>
-    setTimeout(() => {
+    after(duration + 40, () => {
       ghost.remove()
       el.classList.remove('px-in')
       r()

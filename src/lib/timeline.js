@@ -33,6 +33,19 @@ export class Timeline {
     a.addEventListener?.('cancel', done)
     return a
   }
+  /** Compress everything already scheduled (timers + running animations) by factor f. */
+  hurry(f) {
+    if (this.dead || f <= 1) return
+    const now = performance.now()
+    this.timers.forEach((t) => {
+      if (t.id !== null) {
+        clearTimeout(t.id)
+        t.remaining = Math.max(0, t.remaining - (now - t.start)) / f
+        this.arm(t)
+      } else t.remaining /= f
+    })
+    this.anims.forEach((a) => (a.playbackRate = Math.max(a.playbackRate || 1, f)))
+  }
   onChange(fn) {
     this.listeners.add(fn)
   }

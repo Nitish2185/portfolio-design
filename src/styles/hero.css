@@ -909,3 +909,11 @@
     padding: 8px 12px;
   }
 }
+
+/* pinned hero: scrolling past it flips the storyboard card (top is set from JS) */
+.hero-pin {
+  position: relative;
+}
+.hero-pin > .hero {
+  position: sticky;
+}

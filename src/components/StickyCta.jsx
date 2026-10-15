@@ -10,7 +10,10 @@ export default function StickyCta() {
     const f = () => {
       const contact = document.getElementById('contact')
       const nearContact = contact && contact.getBoundingClientRect().top < innerHeight * 0.8
-      setShow(scrollY > innerHeight * 0.9 && !nearContact)
+      // wait until the pinned hero (and its stage tabs) has scrolled away
+      const pin = document.querySelector('.hero-pin')
+      const pastHero = pin ? pin.getBoundingClientRect().bottom < innerHeight * 0.5 : scrollY > innerHeight * 0.9
+      setShow(pastHero && !nearContact)
     }
     f()
     addEventListener('scroll', f, { passive: true })

@@ -34,6 +34,7 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
     if (!yes) boost = 12
     D = yes ? boost : 1
     N = yes ? boost : 1
+    if (yes) tl.hurry(boost) // also squeeze whatever is already in flight
   }
   const sleep = (ms) => (reduced ? Promise.resolve() : tl.sleep(ms / D))
   const after = (ms, fn) => (reduced ? fn() : tl.after(ms, fn))
@@ -215,7 +216,7 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
           return type(k.sField, story.share.typed, 30)
         })
         .then(() => sleep(300))
-        .then(() => dust(k.sGo, () => (k.sGo.textContent = story.share.done)))
+        .then(() => dust(k.sGo, () => (k.sGo.textContent = story.share.done), 720, tl))
         .then(() => sleep(400))
     },
     () => {
@@ -236,7 +237,7 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
             t.textContent = story.prdRewritten
             t.classList.remove('hl')
             t.classList.add('ok')
-          }, 800),
+          }, 800, tl),
         )
         .then(() => sleep(250))
         .then(() => (k.chip.classList.add('out'), sleep(300)))
@@ -245,7 +246,7 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
   ]
 
   // sequencing: `done` = last finished act, `want` = where the user wants to be
-  let done = 0, want = 0, running = false, ready = false, booted = false, auto = true, autoTimer = null
+  let done = 0, want = 0, running = false, ready = false, booted = false, autoTimer = null
   const clearAuto = () => (tl.clear(autoTimer), (autoTimer = null))
   const jumpReset = (s) => {
     bump()
@@ -260,11 +261,13 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
     const f = shown !== 0 ? flipCard(0) : Promise.resolve()
     return Promise.all([f, flipDock('term', -1, 120)]).then(() => sleep(300))
   }
+  let epoch = 0
   const drive = () => {
     if (running) return
     running = true
+    const mine = epoch
     const step = () => {
-      if (dead) return
+      if (dead || mine !== epoch) return
       if (want === done) {
         running = false
         fast(false)
@@ -282,33 +285,13 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
     }
     step()
   }
-  const atTop = () => scrollY <= 4 && booted
-  const nextSection = () => stage.closest('section')?.nextElementSibling?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' })
-  const scheduleAuto = () => {
-    clearAuto()
-    if (reduced || !auto) return
-    autoTimer = tl.after(done < 2 ? 1400 : 2000, () => {
-      autoTimer = null
-      if (done < 2) {
-        want = done + 1
-        if (ready) drive()
-        return
-      }
-      auto = false
-      if (atTop() && !document.documentElement.classList.contains('menu-open')) nextSection()
-    })
-  }
-  const reArm = (fromScroll) => {
-    if (auto || reduced || !booted || scrollY > 4 || want >= 2) return
-    auto = true
-    if (fromScroll && !running && ready) scheduleAuto()
-  }
+  // no auto-advance: the page scroll decides which act is on screen
+  const scheduleAuto = () => clearAuto()
   const setWant = (s) => {
     const t = clamp(s, 0, 2)
     if (t === want) return
     clearAuto()
     want = t
-    reArm(false)
     if (ready) drive()
   }
   const jumpTo = (s) => {
@@ -319,13 +302,36 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
     fast(true, 24)
     setWant(s)
   }
-  const onScroll = () => {
-    if (auto && scrollY > 4) {
-      auto = false
-      clearAuto()
-    } else if (!auto && scrollY <= 4) reArm(true)
+  // scroll position → act; whatever is still playing speeds up so the flips keep pace
+  // Drop whatever act is mid-flight (typing, timers, flips, dust ghosts) so the next
+  // act can start immediately; done = -9 forces a clean jumpReset to the target.
+  const abort = () => {
+    epoch += 1
+    bump()
+    tl.timers.forEach((t) => tl.clear(t))
+    tl.anims.forEach((a) => a.cancel())
+    root.querySelectorAll('.dust-ghost').forEach((g) => g.remove())
+    root.querySelectorAll('.px-in').forEach((el) => el.classList.remove('px-in'))
+    if (!ready) {
+      // still booting: finish the intro state instantly
+      k.dark.classList.add('in')
+      stage.classList.add('is-xl')
+      ready = true
+    }
+    running = false
+    done = -9
+    fast(false)
   }
-  addEventListener('scroll', onScroll, { passive: true })
+  const scrollTo = (s) => {
+    const t = clamp(s, 0, 2)
+    if (!booted || t === want) return
+    active = -1
+    mark(t)
+    active = t
+    if (running || !ready) abort()
+    want = t
+    drive()
+  }
 
   return {
     boot() {
@@ -370,6 +376,7 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
       )
     },
     jumpTo,
+    scrollTo,
     setRunning(run) {
       run ? tl.resume() : tl.pause()
     },
@@ -378,7 +385,6 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
       bump()
       tl.destroy()
       stopLoop()
-      removeEventListener('scroll', onScroll)
     },
   }
 }
@@ -389,6 +395,8 @@ export default function Hero() {
   const root = useRef(null)
   const stage = useRef(null)
   const api = useRef(null)
+  const pin = useRef(null)
+  const pinApi = useRef(null)
   const [phase, setPhase] = useState(0)
   const [ready, setReady] = useState(onceFired('loader:done'))
   const reduced = useReducedMotion()
@@ -427,11 +435,64 @@ export default function Hero() {
     }
   }, [reduced])
 
+  // Pin the hero while the page scrolls past it (position: sticky, so scrolling is never
+  // blocked). Two stretches of scroll flip the card to act 2 and act 3; scrolling back up
+  // flips it back.
+  useLayoutEffect(() => {
+    const wrap = pin.current
+    const hero = section.current
+    const copy = hero.querySelector('.hero__copy')
+    let heroH = 0, flip = 0, raf = 0, settle = 0
+    const pinStart = () => Math.max(0, heroH - innerHeight) // pins once the hero's bottom reaches the viewport's
+    const update = () => {
+      raf = 0
+      const scrolled = -wrap.getBoundingClientRect().top
+      // the headline fades out as the card takes over, so nothing sits half-hidden under the nav
+      const fade = clamp(1 - scrolled / (pinStart() + flip * 0.4), 0, 1)
+      copy.style.opacity = fade < 1 ? fade.toFixed(3) : ''
+      copy.style.pointerEvents = fade < 0.2 ? 'none' : ''
+      const p = clamp((scrolled - pinStart()) / (2 * flip), 0, 1)
+      const act = p < 0.25 ? 0 : p < 0.75 ? 1 : 2
+      // commit once the scroll settles, so acts you fly past (or a smooth scroll crosses) don't play
+      clearTimeout(settle)
+      settle = setTimeout(() => api.current?.scrollTo(act), 120)
+    }
+    const measure = () => {
+      heroH = hero.offsetHeight
+      flip = Math.round(innerHeight * 0.6)
+      wrap.style.height = `${heroH + 2 * flip}px`
+      // stretch the sky behind the hero by the pinned distance so the card keeps its backdrop
+      document.documentElement.style.setProperty('--hero-pin-extra', `${2 * flip}px`)
+      hero.style.top = `${Math.min(0, innerHeight - heroH)}px`
+      update()
+    }
+    const onScroll = () => raf || (raf = requestAnimationFrame(update))
+    pinApi.current = {
+      goTo(i) {
+        const top = wrap.getBoundingClientRect().top + scrollY + pinStart() + i * flip
+        scrollTo({ top, behavior: reduced ? 'auto' : 'smooth' })
+      },
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(hero)
+    addEventListener('resize', measure)
+    addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      ro.disconnect()
+      cancelAnimationFrame(raf)
+      clearTimeout(settle)
+      removeEventListener('resize', measure)
+      removeEventListener('scroll', onScroll)
+    }
+  }, [reduced])
+
   useEffect(() => {
     api.current?.setRunning(visible && pageVisible)
   }, [visible, pageVisible, reduced])
 
   return (
+    <div className="hero-pin" ref={pin}>
     <section className={`hero ${ready ? 'is-ready' : ''}`} id="top" ref={section}>
       <div className="hero__copy">
         <h1 className="hero__title">
@@ -624,7 +685,7 @@ export default function Hero() {
             role="tab"
             aria-selected={phase === i}
             className={phase === i ? 'is-active' : ''}
-            onClick={() => api.current?.jumpTo(i)}
+            onClick={() => pinApi.current?.goTo(i)}
           >
             <i />
             {p}
@@ -633,5 +694,6 @@ export default function Hero() {
         <span className="hero__hint">Scroll to explore</span>
       </div>
     </section>
+    </div>
   )
 }
