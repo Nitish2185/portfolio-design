@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react'
 import { nav, profile } from '../data'
-import { on, onceFired } from '../lib/bus'
 import Icon from './Icons'
 
 export default function Nav() {
-  const [ready, setReady] = useState(onceFired('loader:done'))
+  const [ready, setReady] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('')
 
-  useEffect(() => on('loader:done', () => setReady(true)), [])
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setReady(true))
+    return () => cancelAnimationFrame(id)
+  }, [])
 
   useEffect(() => {
     const f = () => setScrolled(scrollY > 24)
