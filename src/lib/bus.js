@@ -1,16 +1,13 @@
-// Tiny event bus — the hero, tunnel transition and showcase talk through it
-// (hero cue → tunnel transition → showcase).
+// Tiny event bus — the loader, hero storyboard and sky talk through it
+// (mirrors the reference site's "loader:done" / "sky:lift" events).
 const map = new Map()
 export function on(name, fn) {
   if (!map.has(name)) map.set(name, new Set())
   map.get(name).add(fn)
   return () => map.get(name)?.delete(fn)
 }
-/** Returns how many listeners handled the event. */
 export function emit(name, payload) {
-  const set = map.get(name)
-  set?.forEach((fn) => fn(payload))
-  return set ? set.size : 0
+  map.get(name)?.forEach((fn) => fn(payload))
 }
 // remember one-shot events so late subscribers still fire
 const fired = new Set()

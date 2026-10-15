@@ -13,10 +13,7 @@ export const profile = {
   phone: '+91-8957208526',
   resume: '/resume.pdf', // replace public/resume.pdf with your own
   openToWork: true,
-  // wrap words in *asterisks* to highlight them in electric blue
-  headline: ['Hi, I’m Priyanshu Tripathi.', 'I *build* for the *web*.'],
-  // shown during the tunnel transition
-  tunnelHeadline: 'The Future of Building.',
+  headline: ['Hi, I’m Priyanshu.', 'I build for the web.'],
   intro:
     'MCA student at ABES Engineering College building REST APIs and database-driven apps with Node.js, Express, MongoDB and React — with a soft spot for AI and the cloud.',
   tagline: ['learn', 'build', 'ship'],
