@@ -129,7 +129,7 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
   }
   const unskeleton = () => {
     scenes[0].classList.remove('skel')
-    return sleep(260)
+    return sleep(80)
       .then(() => {
         skillBars.forEach((b, i) => {
           b.style.setProperty('--rd', `${70 * i}ms`)
@@ -202,11 +202,12 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
   // the three acts
   const acts = [
     () =>
-      type(k.task, story.prompt, 32)
-        .then(() => (k.task.append(document.createElement('i')), sleep(600)))
-        .then(() => ((k.task.textContent = ''), log([...story.boot, ...story.fetch], 110)))
-        .then(() => sleep(350))
-        .then(unskeleton),
+      Promise.all([
+        unskeleton(),
+        type(k.task, story.prompt, 32)
+          .then(() => (k.task.append(document.createElement('i')), sleep(600)))
+          .then(() => ((k.task.textContent = ''), log([...story.boot, ...story.fetch], 110))),
+      ]).then(() => sleep(350)),
     () => {
       mark(1)
       return Promise.all([flipCard(1), flipDock('share')])
@@ -361,7 +362,7 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
       void stage.offsetWidth
       stage.classList.add('is-on')
       skyLift(0, true)
-      after(1300, () => ((shown = 0), showScene(0)))
+      after(1300, () => ((shown = 0), showScene(0), unskeleton()))
       after(1700, () => typeDocName(story.documents[0]))
       after(2500, () => k.dark.classList.add('in'))
       after(3100, () =>
