@@ -283,7 +283,6 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
     step()
   }
   const atTop = () => scrollY <= 4 && booted
-  const isLast = () => done === 2 && want === 2
   const nextSection = () => stage.closest('section')?.nextElementSibling?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' })
   const scheduleAuto = () => {
     clearAuto()
@@ -320,79 +319,13 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
     fast(true, 24)
     setWant(s)
   }
-  const nudge = (d) => {
-    const t = clamp(want + d, 0, 2)
-    if (t === want) return
-    if (running || !ready) fast(true)
-    setWant(t)
-  }
-
-  // scroll-jacking at the very top of the page, exactly like the reference
-  let acc = 0, lock = 0
-  const onWheel = (e) => {
-    const now = performance.now()
-    if (!booted || !atTop() || e.ctrlKey) return
-    if (e.deltaY > 0 && isLast() && now >= lock) {
-      e.preventDefault()
-      lock = now + 1200
-      return nextSection()
-    }
-    e.preventDefault()
-    if (now < lock) return
-    acc += e.deltaY
-    if (Math.abs(acc) > 40) {
-      const d = acc > 0 ? 1 : -1
-      acc = 0
-      lock = now + 900
-      nudge(d)
-    }
-  }
-  const onKey = (e) => {
-    const t = e.target
-    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return
-    if (t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable)) return
-    if (!booted || !atTop()) return
-    const fwd = e.key === 'ArrowRight' || e.key === 'ArrowDown'
-    const back = e.key === 'ArrowLeft' || e.key === 'ArrowUp'
-    if (!fwd && !back) return
-    e.preventDefault()
-    if (fwd) isLast() ? nextSection() : nudge(1)
-    else if (want > 0) jumpTo(want - 1)
-  }
-  let touch = null
-  const onTouchStart = (e) => (touch = e.touches.length === 1 ? { x: e.touches[0].clientX, y: e.touches[0].clientY, t: Date.now(), axis: null, held: false } : null)
-  const onTouchMove = (e) => {
-    if (!touch || e.touches.length !== 1) return
-    const dx = e.touches[0].clientX - touch.x, dy = e.touches[0].clientY - touch.y
-    if (!touch.axis) {
-      if (!dx && !dy) return
-      touch.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'
-      if (touch.axis === 'y' && booted && atTop() && e.cancelable) touch.held = dy < 0 ? !isLast() : want > 0
-    }
-    if (touch.held && e.cancelable) e.preventDefault()
-  }
-  const onTouchEnd = (e) => {
-    const t = touch
-    touch = null
-    if (!t || !booted || !t.axis) return
-    const c = e.changedTouches[0]
-    const dx = c.clientX - t.x, dy = c.clientY - t.y
-    if (t.axis === 'x') {
-      if (Math.abs(dx) > 40 && Date.now() - t.t < 600) nudge(dx < 0 ? 1 : -1)
-    } else if (t.held && Math.abs(dy) > 30) nudge(dy < 0 ? 1 : -1)
-  }
   const onScroll = () => {
     if (auto && scrollY > 4) {
       auto = false
       clearAuto()
     } else if (!auto && scrollY <= 4) reArm(true)
   }
-  addEventListener('wheel', onWheel, { passive: false })
-  addEventListener('keydown', onKey)
   addEventListener('scroll', onScroll, { passive: true })
-  stage.addEventListener('touchstart', onTouchStart, { passive: true })
-  stage.addEventListener('touchmove', onTouchMove, { passive: false })
-  stage.addEventListener('touchend', onTouchEnd, { passive: true })
 
   return {
     boot() {
@@ -445,12 +378,7 @@ function createStoryboard({ root, stage, reduced, onPhase }) {
       bump()
       tl.destroy()
       stopLoop()
-      removeEventListener('wheel', onWheel)
-      removeEventListener('keydown', onKey)
       removeEventListener('scroll', onScroll)
-      stage.removeEventListener('touchstart', onTouchStart)
-      stage.removeEventListener('touchmove', onTouchMove)
-      stage.removeEventListener('touchend', onTouchEnd)
     },
   }
 }
