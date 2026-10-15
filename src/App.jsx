@@ -9,6 +9,8 @@ import Certifications from './components/Certifications'
 import Connect from './components/Connect'
 import Contact from './components/Contact'
 import Faq from './components/Faq'
+import Footer from './components/Footer'
+import StickyCta from './components/StickyCta'
 
 export default function App() {
   return (
@@ -28,6 +30,8 @@ export default function App() {
         <Contact />
         <Faq />
       </main>
+      <Footer />
+      <StickyCta />
     </>
   )
 }
