@@ -3,7 +3,7 @@ import { emitOnce, onceFired } from '../lib/bus'
 import { prefersReduced } from '../lib/motion'
 import { profile } from '../data'
 
-const DURATION = 5200
+const DURATION = 3400
 
 // corridor (world units) and how far it stretches
 const HW = 1.7 // half width
@@ -179,7 +179,7 @@ export default function Loader() {
   useEffect(() => {
     if (state !== 'exit') return
     document.documentElement.classList.remove('is-loading')
-    const id = setTimeout(() => setState('gone'), 1400)
+    const id = setTimeout(() => setState('gone'), 1000)
     return () => clearTimeout(id)
   }, [state])
 
