@@ -5,6 +5,7 @@ import nodemailer from 'nodemailer'
 import path from 'node:path'
 import fs from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import { fetchLeetCode } from './leetcode.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express()
@@ -54,6 +55,21 @@ const escape = (s) =>
 const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s)
 
 app.get('/api/health', (_req, res) => res.json({ ok: true, smtp: smtpReady }))
+
+// ---------- LeetCode stats (cached for 6 hours) ----------
+const LEETCODE_USER = process.env.LEETCODE_USER || 'priyanshu2068'
+let leetcodeCache = { at: 0, data: null }
+app.get('/api/leetcode', async (_req, res) => {
+  if (leetcodeCache.data && Date.now() - leetcodeCache.at < 6 * 60 * 60 * 1000) return res.json(leetcodeCache.data)
+  try {
+    leetcodeCache = { at: Date.now(), data: await fetchLeetCode(LEETCODE_USER) }
+    res.json(leetcodeCache.data)
+  } catch (err) {
+    console.warn('[leetcode]', err.message)
+    if (leetcodeCache.data) return res.json(leetcodeCache.data) // stale beats nothing
+    res.status(502).json({ ok: false, error: 'LeetCode is unavailable right now.' })
+  }
+})
 
 app.post('/api/contact', async (req, res) => {
   const { name = '', email = '', subject = '', message = '', company = '' } = req.body || {}

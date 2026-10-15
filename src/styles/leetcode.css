@@ -1,0 +1,284 @@
+/* ═════════════ LeetCode stats ═════════════ */
+/* Blue ramp from the dataviz reference palette — validated:
+   difficulty (ordinal): 250 / 450 / 650; heatmap (sequential): 250 / 400 / 550 / 700 */
+.lc {
+  --lc-easy: #86b6ef;
+  --lc-medium: #2a78d6;
+  --lc-hard: #104281;
+  --lc-h0: #eceef3;
+  --lc-h1: #86b6ef;
+  --lc-h2: #3987e5;
+  --lc-h3: #1c5cab;
+  --lc-h4: #0d366b;
+}
+.lc__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.lc__head .lead {
+  margin-bottom: 0;
+}
+.lc__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 14px;
+}
+.lc-card {
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius);
+  padding: clamp(20px, 2.4vw, 30px);
+}
+.lc-card__label {
+  margin: 0 0 6px;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* headline number */
+.lc-solved__num {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(56px, 7vw, 96px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.lc-solved__of {
+  margin: 6px 0 26px;
+  color: var(--muted);
+}
+
+/* difficulty bars (shared scale, labelled directly) */
+.lc-bars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+.lc-bar__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.lc-bar__name {
+  color: var(--ink-2);
+  font-weight: 500;
+}
+.lc-bar__val {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.lc-bar__val b {
+  color: var(--ink);
+  font-weight: 600;
+}
+.lc-bar__track {
+  height: 12px;
+  border-radius: 4px;
+  background: #f1f2f6;
+  cursor: default;
+  padding: 2px 0; /* taller hit target than the mark */
+  background-clip: content-box;
+}
+.lc-bar__track i {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1.2s var(--ease-soft) calc(0.3s + var(--i) * 0.12s);
+}
+.lc-bar--easy i { background: var(--lc-easy); }
+.lc-bar--medium i { background: var(--lc-medium); }
+.lc-bar--hard i { background: var(--lc-hard); }
+.lc__grid.is-in .lc-bar__track i {
+  transform: scaleX(1);
+}
+
+/* tiles + badges */
+.lc-side {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+.lc-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.lc-tile__value {
+  margin: 4px 0 0;
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(26px, 2.6vw, 34px);
+  line-height: 1.1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.lc-tile__note {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.lc-badges__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+.lc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--blue-soft);
+  color: var(--ink-2);
+  font-size: 14px;
+}
+.lc-badge .icon {
+  color: var(--blue);
+}
+
+/* heatmap */
+.lc-heat {
+  grid-column: 1 / -1;
+}
+.lc-heat__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.lc-heat__legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.lc-heat__legend i {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+.lc-heat__legend i:first-of-type {
+  margin-left: 4px;
+}
+.lc-heat__legend i:last-of-type {
+  margin-right: 4px;
+}
+.lc-heat__scroll {
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+.lc-heat__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--weeks), minmax(11px, 1fr));
+  grid-template-rows: auto;
+  column-gap: 3px;
+  min-width: calc(var(--weeks) * 14px);
+}
+.lc-heat__months {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  font-size: 11px;
+  color: var(--muted);
+  height: 18px;
+}
+.lc-heat__months span {
+  white-space: nowrap;
+}
+.lc-heat__col {
+  display: grid;
+  grid-template-rows: repeat(7, auto);
+  gap: 3px;
+  align-content: start;
+}
+.lc-heat__col i,
+.lc-heat__legend i {
+  display: block;
+  background: var(--lc-h0);
+}
+.lc-heat__col i {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.5s var(--ease-soft), transform 0.5s var(--ease-soft);
+  transition-delay: calc(0.3s + var(--w) * 12ms);
+}
+.lc__grid.is-in .lc-heat__col i {
+  opacity: 1;
+  transform: none;
+}
+.lc-heat__col i:hover {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+}
+.lc .l1 { background: var(--lc-h1); }
+.lc .l2 { background: var(--lc-h2); }
+.lc .l3 { background: var(--lc-h3); }
+.lc .l4 { background: var(--lc-h4); }
+
+.lc__note {
+  margin: 16px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* shared tooltip */
+.lc-tip {
+  position: fixed;
+  z-index: 60;
+  transform: translate(-50%, calc(-100% - 12px));
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--dark);
+  color: #fff;
+  font-size: 12.5px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 900px) {
+  .lc__grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 420px) {
+  .lc-tiles {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lc-bar__track i,
+  .lc-heat__col i {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* let grid items shrink below the heatmap's natural width (it scrolls inside its card) */
+.lc__grid > *,
+.lc-side,
+.lc-tiles > * {
+  min-width: 0;
+}

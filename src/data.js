@@ -205,6 +205,7 @@ export const nav = [
   { id: 'about', label: 'About' },
   { id: 'education', label: 'Education' },
   { id: 'projects', label: 'Projects' },
+  { id: 'leetcode', label: 'LeetCode' },
   { id: 'certifications', label: 'Certifications' },
   { id: 'faq', label: 'FAQs' },
 ]

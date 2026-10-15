@@ -5,6 +5,7 @@ import Hero from './components/Hero'
 import { Statement, About, Stats } from './components/About'
 import Experience from './components/Experience'
 import Projects from './components/Projects'
+import LeetCode from './components/LeetCode'
 import Certifications from './components/Certifications'
 import Connect from './components/Connect'
 import Contact from './components/Contact'
@@ -25,6 +26,7 @@ export default function App() {
         <Stats />
         <Experience />
         <Projects />
+        <LeetCode />
         <Certifications />
         <Connect />
         <Contact />
