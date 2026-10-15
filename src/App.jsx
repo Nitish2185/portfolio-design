@@ -23,10 +23,10 @@ export default function App() {
         <Hero />
         <Statement />
         <About />
+        <LeetCode />
         <Stats />
         <Experience />
         <Projects />
-        <LeetCode />
         <Certifications />
         <Connect />
         <Contact />
